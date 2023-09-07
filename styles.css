@@ -2,16 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     border: 1px solid black;
-    min-height: 512px;
-    max-width: 512px;
+    min-height: 672px;
+    max-width: 672px;
     margin: auto;
 }
 
 .container div {
     flex: auto;
-    flex-basis: 6.25%;
+    flex-basis: 6.25%; 
 }
 
-.mouseisover {
+.painted {
     background-color: black;
 }

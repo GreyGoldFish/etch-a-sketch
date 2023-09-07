@@ -1,19 +1,37 @@
-const GRID_WIDTH = 16;
-const GRID_HEIGHT = 16;
+let mouseIsDown = false;
 
 window.onload = main;
 
+
 function main() {
+    const gridWidth = 16;
+    const gridHeight = 16;
     const container = document.querySelector(".container");
 
 
-    for (let index = 0; index < GRID_WIDTH * GRID_HEIGHT; index++) {
+    for (let index = 0; index < gridWidth * gridHeight; index++) {
         const tile = document.createElement("div");
-        tile.addEventListener("mouseover", onMouseOver);;
+        tile.addEventListener("mousedown", mouseDownListener);
+        tile.addEventListener("mouseup", mouseUpListener);
+        tile.addEventListener("mouseover", mouseOverListener);
         container.appendChild(tile);
     }
 }
 
-function onMouseOver() {
-    this.classList.toggle("mouseisover");
+
+function mouseDownListener() {
+    this.classList.toggle("painted");
+    mouseIsDown = true;
+}
+
+
+function mouseUpListener() {
+    mouseIsDown = false;
+}
+
+
+function mouseOverListener() {
+    if (mouseIsDown) {
+        this.classList.toggle("painted");
+    }
 }
