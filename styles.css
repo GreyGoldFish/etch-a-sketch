@@ -1,4 +1,16 @@
-.container {
+h1 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.button-container {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sketch-pad-container {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid black;
@@ -7,9 +19,8 @@
     margin: auto;
 }
 
-.container div {
+.sketch-pad-container div {
     flex: auto;
-    flex-basis: 6.25%; 
 }
 
 .painted {
