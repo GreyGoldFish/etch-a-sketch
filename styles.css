@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    min-height: 512px;
+    max-width: 512px;
+    margin: auto;
+}
+
+.container div {
+    flex: auto;
+    flex-basis: 6.25%;
+}
