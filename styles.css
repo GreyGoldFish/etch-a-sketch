@@ -11,3 +11,7 @@
     flex: auto;
     flex-basis: 6.25%;
 }
+
+.mouseisover {
+    background-color: black;
+}
