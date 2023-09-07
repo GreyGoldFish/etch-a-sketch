@@ -6,7 +6,7 @@ h1 {
 .button-container {
     height: 64px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 

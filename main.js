@@ -13,14 +13,15 @@ window.onload = createSketchPad;
 
 function createSketchPad() {
     const sketchPad = document.querySelector(".sketch-pad-container");
-    const button = document.querySelector("button");
+    const gridSizeButton = document.querySelector(".grid-size-button");
+    const resetButton = document.querySelector(".reset-button");
 
-    // Set grid size button
-    button.addEventListener("click", buttonClickedListener);
+    gridSizeButton.addEventListener("click", gridSizeButtonClickedListener);
+    resetButton.addEventListener("click", resetButtonClickedListener);
     // Allows user to let go of the mouse button outside of the sketch pad
     window.addEventListener("mouseup", windowMouseUpListener);
 
-    resetSketchPad(sketchPad);
+    resetSketchPad();
 
     for (let index = 0; index < gridWidth * gridHeight; index++) {
         const tile = document.createElement("div");
@@ -32,7 +33,10 @@ function createSketchPad() {
     }
 }
 
-function resetSketchPad(sketchPad) {
+
+function resetSketchPad() {
+    const sketchPad = document.querySelector(".sketch-pad-container");
+
     // Ensures that container has no children (resets)
     while (sketchPad.lastElementChild) {
         sketchPad.removeChild(sketchPad.lastElementChild);
@@ -41,7 +45,7 @@ function resetSketchPad(sketchPad) {
 
 
 // Sets new grid according to prompt between 0 and 100.
-function buttonClickedListener() {
+function gridSizeButtonClickedListener() {
     newWidth = prompt("Grid width:", 16);
     newHeight = prompt("Grid height:", newWidth);
 
@@ -51,6 +55,12 @@ function buttonClickedListener() {
     gridWidth = newWidth;
     gridHeight = newHeight;
 
+    createSketchPad();
+}
+
+
+function resetButtonClickedListener() {
+    resetSketchPad();
     createSketchPad();
 }
 
