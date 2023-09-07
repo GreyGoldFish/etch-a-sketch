@@ -5,8 +5,7 @@ const max = 100
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 let mouseIsDown = false;
-let gridWidth = 16;
-let gridHeight = 16;
+let gridSize = 16;
 
 window.onload = createSketchPad;
 
@@ -23,9 +22,9 @@ function createSketchPad() {
 
     resetSketchPad();
 
-    for (let index = 0; index < gridWidth * gridHeight; index++) {
+    for (let index = 0; index < gridSize * gridSize; index++) {
         const tile = document.createElement("div");
-        tile.style.flexBasis = ((1 / gridWidth) * 100) + "%";
+        tile.style.flexBasis = ((1 / gridSize) * 100) + "%";
         // Determine whether mouse is being dragged after mouse is down.
         tile.addEventListener("mousedown", tileMouseDownListener);
         tile.addEventListener("mouseover", tileMouseOverListener);
@@ -46,14 +45,11 @@ function resetSketchPad() {
 
 // Sets new grid according to prompt between 0 and 100.
 function gridSizeButtonClickedListener() {
-    newWidth = prompt("Grid width:", 16);
-    newHeight = prompt("Grid height:", newWidth);
+    newSize= prompt("Grid size:", 16);
 
-    newWidth = clamp(newWidth, 0, 100);
-    newHeight = clamp(newHeight, 0, 100);
+    newSize = clamp(newSize, 0, 100);
 
-    gridWidth = newWidth;
-    gridHeight = newHeight;
+    gridSize = newSize;
 
     createSketchPad();
 }
