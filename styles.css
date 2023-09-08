@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 h1 {
     text-align: center;
     margin-bottom: 0;
@@ -5,12 +9,12 @@ h1 {
 
 .button-container {
     min-height: 64px;
-    max-width: 672px;
-    margin: auto;
+    border-bottom: 1px solid black;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    gap: 64px;
 }
 
 .grid-container {
@@ -19,7 +23,7 @@ h1 {
     border: 1px solid black;
     min-height: 672px;
     max-width: 672px;
-    margin: auto;
+    margin: 64px auto;
 }
 
 .grid-container div {

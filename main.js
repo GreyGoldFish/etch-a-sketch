@@ -46,8 +46,8 @@ function clearButtonClickListener() {
 }
 
 
-function colorPickerInputListener() {
-    return
+function colorPickerInputListener(event) {
+    current_color = event.target.value;
 }
 
 
@@ -76,7 +76,7 @@ function windowMouseUpListener() {
 
 
 function paintTile(tile) {
-    tile.style.backgroundColor = "black";
+    tile.style.backgroundColor = current_color;
 }
 
 
