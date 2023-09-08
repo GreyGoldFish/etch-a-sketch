@@ -3,7 +3,7 @@ const MAX_GRID_SIZE = 100
 
 let mouseIsDown = false;
 let gridSize = 16;
-let currentColor = "black";
+let currentColor = "rgb(0, 0, 0)";
 let currentMode = "pencil";
 
 window.onload = createGrid;
@@ -28,19 +28,19 @@ function createGrid() {
     lightenButton.addEventListener("click", lightenButtonClickListener);
     clearButton.addEventListener("click", clearButtonClickListener);
     gridSizeButton.addEventListener("click", gridSizeButtonClickListener);
-    // Allows user to let go of the mouse button outside of the sketch pad
+    // Allows user to let go of the mouse button outside of the grid
     window.addEventListener("mouseup", windowMouseUpListener);
 
     clearGrid();
 
     for (let index = 0; index < gridSize * gridSize; index++) {
-        const tile = document.createElement("div");
-        tile.style.flexBasis = ((1 / gridSize) * 100) + "%";
+        const cell = document.createElement("div");
+        cell.style.flexBasis = ((1 / gridSize) * 100) + "%";
         
-        tile.classList.add("grid-tile");
-        tile.addEventListener("mousedown", tileMouseDownListener);
-        tile.addEventListener("mouseover", tileMouseOverListener);
-        grid.appendChild(tile);
+        cell.classList.add("grid-cell");
+        cell.addEventListener("mousedown", cellMouseDownListener);
+        cell.addEventListener("mouseover", cellMouseOverListener);
+        grid.appendChild(cell);
     }
 }
 
@@ -52,20 +52,60 @@ function clearGrid() {
 }
 
 
-function changeTile(tile) {
+function getRGBColor(r, g, b) {
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+
+function getRGBColorArray(color) {
+    return color.substring(4).slice(0, -1).split(", ");
+}
+
+
+function shadeColor(color, value) {
+    let colorArray = getRGBColorArray(color)
+    let newColorArray = colorArray.map(primaryColor => {
+        return primaryColor *= value;
+    });
+    let newColor = getRGBColor(
+        newColorArray[0],
+        newColorArray[1],
+        newColorArray[2]);
+    return newColor
+}
+
+
+function changeCell(cell) {
     switch (currentMode) {
         case "pencil":
-            tile.style.backgroundColor = currentColor;
+            cell.style.backgroundColor = currentColor;
             break;
         case "erase":
-            tile.style.backgroundColor = "";
+            cell.style.backgroundColor = "";
             break;
         case "rainbow":
-            let randomColor = Math.floor(Math.random()*16777215).toString(16);
-            tile.style.backgroundColor = "#" + randomColor;
+            let randomColor = getRGBColor(
+                Math.floor(Math.random() * 255),
+                Math.floor(Math.random() * 255),
+                Math.floor(Math.random() * 255));
+            cell.style.backgroundColor = randomColor;
+            break;
         case "shade":
-            let darkerColor = tile.style.backgroundColor;
-            console.log(darkerColor);
+            let darkerColor = cell.style.backgroundColor;
+            if (darkerColor === "") {
+                return;
+            }
+            darkerColor = shadeColor(darkerColor, 0.9);
+            cell.style.backgroundColor = darkerColor;
+            break;
+        case "lighten":
+            let lighterColor = cell.style.backgroundColor;
+            if (lighterColor === "") {
+                return;
+            }
+            lighterColor = shadeColor(lighterColor, 1.1);
+            cell.style.backgroundColor = lighterColor;
+            break;
         default:
             break;
     }
@@ -122,10 +162,10 @@ function gridSizeButtonClickListener() {
 }
 
 
-// Allows for drawing the first tile clicked
-function tileMouseDownListener(event) {
+// Allows for drawing the first cell clicked
+function cellMouseDownListener(event) {
     mouseIsDown = true;
-    changeTile(event.target)
+    changeCell(event.target)
 }
 
 
@@ -135,9 +175,9 @@ function windowMouseUpListener() {
 }
 
 
-// Only draws if the user holds the mouse button down and is over a tile
-function tileMouseOverListener(event) {
+// Only draws if the user holds the mouse button down and is over a cell
+function cellMouseOverListener(event) {
     if (mouseIsDown) {
-        changeTile(event.target)
+        changeCell(event.target)
     }
 }

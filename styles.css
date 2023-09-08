@@ -26,6 +26,6 @@ h1 {
     margin: 64px auto;
 }
 
-.grid-tile {
+.grid-cell {
     user-select: none;
 }
