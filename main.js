@@ -13,19 +13,19 @@ window.onload = createSketchPad;
 function createSketchPad() {
     const sketchPad = document.querySelector(".sketch-pad-container");
     const gridSizeButton = document.querySelector(".grid-size-button");
-    const resetButton = document.querySelector(".reset-button");
+    const clearButton = document.querySelector(".clear-button");
 
     gridSizeButton.addEventListener("click", gridSizeButtonClickedListener);
-    resetButton.addEventListener("click", resetButtonClickedListener);
+    clearButton.addEventListener("click", clearButtonClickedListener);
     // Allows user to let go of the mouse button outside of the sketch pad
     window.addEventListener("mouseup", windowMouseUpListener);
 
-    resetSketchPad();
+    clearSketchPad();
 
     for (let index = 0; index < gridSize * gridSize; index++) {
         const tile = document.createElement("div");
         tile.style.flexBasis = ((1 / gridSize) * 100) + "%";
-        // Determine whether mouse is being dragged after mouse is down.
+        
         tile.addEventListener("mousedown", tileMouseDownListener);
         tile.addEventListener("mouseover", tileMouseOverListener);
         sketchPad.appendChild(tile);
@@ -33,13 +33,10 @@ function createSketchPad() {
 }
 
 
-function resetSketchPad() {
+function clearSketchPad() {
     const sketchPad = document.querySelector(".sketch-pad-container");
 
-    // Ensures that container has no children (resets)
-    while (sketchPad.lastElementChild) {
-        sketchPad.removeChild(sketchPad.lastElementChild);
-    }
+    sketchPad.innerHTML = "";
 }
 
 
@@ -55,15 +52,14 @@ function gridSizeButtonClickedListener() {
 }
 
 
-function resetButtonClickedListener() {
-    resetSketchPad();
+function clearButtonClickedListener() {
+    clearSketchPad();
     createSketchPad();
 }
 
 
 // Allows for painting the first tile clicked
 function tileMouseDownListener() {
-    this.classList.toggle("painted");
     mouseIsDown = true;
 }
 
