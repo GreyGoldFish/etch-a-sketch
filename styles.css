@@ -30,7 +30,3 @@ h1 {
     flex: auto;
     user-select: none;
 }
-
-.painted {
-    background-color: black;
-}
