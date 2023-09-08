@@ -11,15 +11,21 @@ window.onload = createGrid;
 
 function createGrid() {
     const colorPicker = document.querySelector(".color-picker");
+    const pencilButton = document.querySelector(".pencil-button");
     const eraserButton = document.querySelector(".eraser-button");
     const rainbowButton = document.querySelector(".rainbow-button");
+    const shadeButton = document.querySelector(".shade-button");
+    const lightenButton = document.querySelector(".lighten-button");
     const clearButton = document.querySelector(".clear-button");
     const gridSizeButton = document.querySelector(".grid-size-button");
     const grid = document.querySelector(".grid-container");
 
     colorPicker.addEventListener("input", colorPickerInputListener);
+    pencilButton.addEventListener("click", pencilButtonClickListener);
     eraserButton.addEventListener("click", eraserButtonClickListener);
     rainbowButton.addEventListener("click", rainbowButtonClickListener);
+    shadeButton.addEventListener("click", shadeButtonClickListener);
+    lightenButton.addEventListener("click", lightenButtonClickListener);
     clearButton.addEventListener("click", clearButtonClickListener);
     gridSizeButton.addEventListener("click", gridSizeButtonClickListener);
     // Allows user to let go of the mouse button outside of the sketch pad
@@ -57,6 +63,9 @@ function changeTile(tile) {
         case "rainbow":
             let randomColor = Math.floor(Math.random()*16777215).toString(16);
             tile.style.backgroundColor = "#" + randomColor;
+        case "shade":
+            let darkerColor = tile.style.backgroundColor;
+            console.log(darkerColor);
         default:
             break;
     }
@@ -69,6 +78,11 @@ function colorPickerInputListener(event) {
 }
 
 
+function pencilButtonClickListener() {
+    currentMode = "pencil";
+}
+
+
 function eraserButtonClickListener() {
     currentMode = "erase";
 }
@@ -76,6 +90,16 @@ function eraserButtonClickListener() {
 
 function rainbowButtonClickListener() {
     currentMode = "rainbow";
+}
+
+
+function shadeButtonClickListener() {
+    currentMode = "shade";
+}
+
+
+function lightenButtonClickListener() {
+    currentMode = "lighten";
 }
 
 
