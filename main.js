@@ -1,26 +1,26 @@
-const min = 0
-const max = 100
-
-// Clamp number between two values with the following line:
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+const MIN_GRID_SIZE = 0
+const MAX_GRID_SIZE = 100
 
 let mouseIsDown = false;
 let gridSize = 16;
+let current_color = "rgb(0, 0, 0)";
 
-window.onload = createSketchPad;
+window.onload = createGrid;
 
 
-function createSketchPad() {
-    const sketchPad = document.querySelector(".sketch-pad-container");
-    const gridSizeButton = document.querySelector(".grid-size-button");
+function createGrid() {
+    const colorPicker = document.querySelector(".color-picker");
     const clearButton = document.querySelector(".clear-button");
+    const gridSizeButton = document.querySelector(".grid-size-button");
+    const grid = document.querySelector(".grid-container");
 
-    gridSizeButton.addEventListener("click", gridSizeButtonClickedListener);
-    clearButton.addEventListener("click", clearButtonClickedListener);
+    colorPicker.addEventListener("input", colorPickerInputListener);
+    clearButton.addEventListener("click", clearButtonClickListener);
+    gridSizeButton.addEventListener("click", gridSizeButtonClickListener);
     // Allows user to let go of the mouse button outside of the sketch pad
     window.addEventListener("mouseup", windowMouseUpListener);
 
-    clearSketchPad();
+    clearGrid();
 
     for (let index = 0; index < gridSize * gridSize; index++) {
         const tile = document.createElement("div");
@@ -28,33 +28,38 @@ function createSketchPad() {
         
         tile.addEventListener("mousedown", tileMouseDownListener);
         tile.addEventListener("mouseover", tileMouseOverListener);
-        sketchPad.appendChild(tile);
+        grid.appendChild(tile);
     }
 }
 
 
-function clearSketchPad() {
-    const sketchPad = document.querySelector(".sketch-pad-container");
+function clearGrid() {
+    const grid = document.querySelector(".grid-container");
 
-    sketchPad.innerHTML = "";
+    grid.innerHTML = "";
+}
+
+
+function clearButtonClickListener() {
+    clearGrid();
+    createGrid();
+}
+
+
+function colorPickerInputListener() {
+    return
 }
 
 
 // Sets new grid according to prompt between 0 and 100.
-function gridSizeButtonClickedListener() {
+function gridSizeButtonClickListener() {
     newSize= prompt("Grid size:", 16);
 
-    newSize = clamp(newSize, 0, 100);
+    Math.min(Math.max(newSize, MIN_GRID_SIZE), MAX_GRID_SIZE);
 
     gridSize = newSize;
 
-    createSketchPad();
-}
-
-
-function clearButtonClickedListener() {
-    clearSketchPad();
-    createSketchPad();
+    createGrid();
 }
 
 
@@ -64,15 +69,20 @@ function tileMouseDownListener() {
 }
 
 
-// Stops painting
+// Stops painting if mouse is down
 function windowMouseUpListener() {
     mouseIsDown = false;
 }
 
 
-// Only paints if the user holds the mouse button down
-function tileMouseOverListener() {
+function paintTile(tile) {
+    tile.style.backgroundColor = "black";
+}
+
+
+// Only paints if the user holds the mouse button down and is over a tile
+function tileMouseOverListener(event) {
     if (mouseIsDown) {
-        this.classList.toggle("painted");
+        paintTile(event.target);
     }
 }
