@@ -12,12 +12,14 @@ window.onload = createGrid;
 function createGrid() {
     const colorPicker = document.querySelector(".color-picker");
     const eraserButton = document.querySelector(".eraser-button");
+    const rainbowButton = document.querySelector(".rainbow-button");
     const clearButton = document.querySelector(".clear-button");
     const gridSizeButton = document.querySelector(".grid-size-button");
     const grid = document.querySelector(".grid-container");
 
     colorPicker.addEventListener("input", colorPickerInputListener);
     eraserButton.addEventListener("click", eraserButtonClickListener);
+    rainbowButton.addEventListener("click", rainbowButtonClickListener);
     clearButton.addEventListener("click", clearButtonClickListener);
     gridSizeButton.addEventListener("click", gridSizeButtonClickListener);
     // Allows user to let go of the mouse button outside of the sketch pad
@@ -29,6 +31,7 @@ function createGrid() {
         const tile = document.createElement("div");
         tile.style.flexBasis = ((1 / gridSize) * 100) + "%";
         
+        tile.classList.add("grid-tile");
         tile.addEventListener("mousedown", tileMouseDownListener);
         tile.addEventListener("mouseover", tileMouseOverListener);
         grid.appendChild(tile);
@@ -51,6 +54,9 @@ function changeTile(tile) {
         case "erase":
             tile.style.backgroundColor = "";
             break;
+        case "rainbow":
+            let randomColor = Math.floor(Math.random()*16777215).toString(16);
+            tile.style.backgroundColor = "#" + randomColor;
         default:
             break;
     }
@@ -68,6 +74,11 @@ function eraserButtonClickListener() {
 }
 
 
+function rainbowButtonClickListener() {
+    currentMode = "rainbow";
+}
+
+
 function clearButtonClickListener() {
     clearGrid();
     createGrid();
@@ -75,9 +86,11 @@ function clearButtonClickListener() {
 
 // Sets new grid according to prompt between 0 and 100.
 function gridSizeButtonClickListener() {
-    newSize= prompt("Grid size:", 16);
+    newSize = prompt("Grid size:", 16);
 
-    Math.min(Math.max(newSize, MIN_GRID_SIZE), MAX_GRID_SIZE);
+    newSize = Math.min(Math.max(newSize, MIN_GRID_SIZE), MAX_GRID_SIZE);
+
+    console.log(newSize);
 
     gridSize = newSize;
 
